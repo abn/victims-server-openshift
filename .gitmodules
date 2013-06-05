@@ -1,0 +1,3 @@
+[submodule "victims-web"]
+	path = victims-web
+	url = git://github.com/victims/victims-web.git

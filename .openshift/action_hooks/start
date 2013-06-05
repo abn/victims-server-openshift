@@ -1,0 +1,2 @@
+#!/bin/bash
+$OPENSHIFT_HOMEDIR/$PY_DIR/virtenv/bin/uwsgi -s $OPENSHIFT_INTERNAL_IP:$OPENSHIFT_INTERNAL_PORT --socket-protocol http --pp $OPENSHIFT_REPO_DIR/wsgi --module application -d $OPENSHIFT_DATA_DIR/victims-web.log --pidfile $OPENSHIFT_TMP_DIR/uwsgi.pid
