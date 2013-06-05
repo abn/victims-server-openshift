@@ -1,7 +1,16 @@
 #!/bin/bash
+
+function fixcfg()
+{
+	cfg=$OPENSHIFT_DATA_DIR/victims-web/src/victims_web/application.cfg
+	sed -i s/'^DEBUG = True$'/'DEBUG = False'/g "$cfg"
+	sed -i s/'MONGODB_PORT = os.environ.*'/"MONGODB_PORT = int(os.environ['OPENSHIFT_DB_PORT'])"/ "$cfg"
+}
+
 if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
 	if [ ! -d $OPENSHIFT_DATA_DIR/victims-web ]; then
 		git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
+		fixcfg
 	fi
 	cp -r $OPENSHIFT_DATA_DIR/victims-web/src/victims_web $OPENSHIFT_REPO_DIR/libs/.
 	cp -r $OPENSHIFT_DATA_DIR/victims-web/src/victims_web/blueprints/ui/static $OPENSHIFT_REPO_DIR/wsgi/.
