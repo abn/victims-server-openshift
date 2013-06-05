@@ -11,6 +11,6 @@ PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tai
 if [ -f $PYDIR/virtenv/bin/activate ]; then
 	source $PYDIR/virtenv/bin/activate
 	if type -p pip > /dev/null; then
-		pip install --use-mirrors $OPENSHIFT_DATA_DIR/victims-web
+		pip install --use-mirrors -e $OPENSHIFT_DATA_DIR/victims-web
 	fi
 fi
