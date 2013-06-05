@@ -14,7 +14,17 @@ This is pretty straight forward, run the following command. The app should be de
 ```sh
 rhc app create victims mongodb-2.2 python-2.6 --from-code git://github.com/abn/victims-server-openshift.git
 ```
-A sample output would be:
+### Importing data
+1. Get the app's SSH address by running ```rhc app show victims```
+2. SSH into the server.
+3. Download the data file you want to import to ```$OPENSHIFT_DATA_DIR```
+4. Run the following command replacing ```$INPUTFILE``` with your file name.
+
+```sh
+mongoimport -d victims -c hashes --type json --file $OPENSHIFT_REPO_DIR/$INPUTFILE  -h $OPENSHIFT_MONGODB_DB_HOST  -u admin -p $OPENSHIFT_MONGODB_DB_PASSWORD --port $OPENSHIFT_MONGODB_DB_PORT
+```
+
+### Sample creation output
 ```sh
 $ rhc app create victims mongodb-2.2 python-2.6 --from-code git://github.com/abn/victims-server-openshift.git
 Application Options
