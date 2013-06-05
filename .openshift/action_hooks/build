@@ -4,6 +4,7 @@ if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
 		git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
 	fi
 	cp -r $OPENSHIFT_DATA_DIR/victims-web/src/victims_web $OPENSHIFT_REPO_DIR/libs/.
+	cp -r $OPENSHIFT_DATA_DIR/victims-web/src/victims_web/blueprints/ui/static $OPENSHIFT_REPO_DIR/wsgi/.
 fi
 
 PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tail -n 1)
