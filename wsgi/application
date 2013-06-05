@@ -8,6 +8,9 @@ PY_DIR = 'python-%s'%(PY_VERSION)
 # source: https://github.com/openshift/flask-example
 sys.path.insert(0, os.path.dirname(__file__) or '.')
 
+# add libs
+sys.path.append(os.path.join(os.getenv("OPENSHIFT_REPO_DIR"), "libs"))
+
 if os.path.exists(os.path.join(os.environ['OPENSHIFT_HOMEDIR'], PY_DIR)):
     PY_DIR = os.path.join(os.environ['OPENSHIFT_HOMEDIR'], PY_DIR)
 else:
@@ -25,6 +28,5 @@ try:
 except IOError:
     pass
 
-sys.path.insert(0, os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'victims-web', 'src'))
-from victims_web import application as application
+from victims_web.application import app as application
 

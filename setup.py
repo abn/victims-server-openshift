@@ -29,8 +29,6 @@ setup(
     author='Steve Milner',
     url='http://www.victi.ms',
 
-    install_requires=[
-		'uWSGI==1.2.3'
-	],
+    install_requires=[],
 )
 
