@@ -1,2 +1,4 @@
 #!/bin/bash
-kill `cat $OPENSHIFT_TMP_DIR/uwsgi.pid`
+if [ -f $OPENSHIFT_TMP_DIR/uwsgi.pid ]; then
+	kill `cat $OPENSHIFT_TMP_DIR/uwsgi.pid`
+fi
