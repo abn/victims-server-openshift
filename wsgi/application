@@ -25,6 +25,6 @@ try:
 except IOError:
     pass
 
-sys.path.insert(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'victims-web', 'src'))
+sys.path.insert(0, os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'victims-web', 'src'))
 from victims_web import application as application
 
