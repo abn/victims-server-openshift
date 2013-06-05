@@ -1,9 +1,8 @@
 #!/bin/bash
 if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
-	if [ -d $OPENSHIFT_DATA_DIR/victims-web ]; then
-		rm -rf $OPENSHIFT_DATA_DIR/victims-web
+	if [ ! -d $OPENSHIFT_DATA_DIR/victims-web ]; then
+		git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
 	fi
-	git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
 	cp -r $OPENSHIFT_DATA_DIR/victims-web/src/victims_web $OPENSHIFT_REPO_DIR/libs/.
 fi
 

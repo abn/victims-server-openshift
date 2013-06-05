@@ -28,5 +28,12 @@ try:
 except IOError:
     pass
 
+# Workaround for inaccurate victims-web config
+os.environ['OPENSHIFT_DB_HOST'] = os.environ['OPENSHIFT_MONGODB_DB_HOST']
+os.environ['OPENSHIFT_DB_PORT'] = os.environ['OPENSHIFT_MONGODB_DB_PORT']
+os.environ['OPENSHIFT_DB_USERNAME'] = os.environ['OPENSHIFT_MONGODB_DB_USERNAME']
+os.environ['OPENSHIFT_DB_PASSWORD'] = os.environ['OPENSHIFT_MONGODB_DB_PASSWORD']
+
+
 from victims_web.application import app as application
 
