@@ -1,2 +1,8 @@
 #!/bin/bash
-$OPENSHIFT_DATA_DIR/bin/uwsgi -s $OPENSHIFT_INTERNAL_IP:$OPENSHIFT_INTERNAL_PORT --socket-protocol http --pp $OPENSHIFT_REPO_DIR/wsgi --module application -d $OPENSHIFT_DATA_DIR/victims-web.log --pidfile $OPENSHIFT_TMP_DIR/uwsgi.pid
+PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tail -n 1)
+if [ -f $PYDIR/virtenv/bin/activate ]; then
+	source $PYDIR/virtenv/bin/activate
+	if [ -f $PYDIR/virtenv/bin/uwsgi ]; then
+		$PYDIR/virtenv/bin/uwsgi -s $OPENSHIFT_INTERNAL_IP:$OPENSHIFT_INTERNAL_PORT --socket-protocol http --pp $OPENSHIFT_REPO_DIR/wsgi --module application -d $OPENSHIFT_DATA_DIR/victims-web.log --pidfile $OPENSHIFT_TMP_DIR/uwsgi.pid
+	fi
+fi

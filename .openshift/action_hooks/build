@@ -1,3 +1,9 @@
 #!/bin/bash
-$OPENSHIFT_DATA_DIR/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/victims-web
-$OPENSHIFT_DATA_DIR/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/requirements.txt
+PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tail -n 1)
+if [ -f $PYDIR/virtenv/bin/activate ]; then
+	source $PYDIR/virtenv/bin/activate
+	if type -p pip > /dev/null; then
+		pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/victims-web
+		pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/requirements.txt
+	fi
+fi
