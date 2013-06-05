@@ -1,5 +1,0 @@
-#!/bin/bash
-PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tail -n 1)
-source $PYDIR/bin/activate_virtenv
-$PYDIR/virtenv/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/victims-web
-$PYDIR/virtenv/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/requirements.txt
