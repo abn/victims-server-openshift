@@ -6,7 +6,7 @@ This repo allows you to deploy a new instance of the victims-web server on opens
 ## Running on OpenShift
 ### Prerequisites
 1. You have a valid account with OpenShift
-2. You have following the instructions at https://www.openshift.com/get-started
+2. You have followed the instructions at https://www.openshift.com/get-started
 3. You have *rhc* installed and ready
 
 ### Creating the app
