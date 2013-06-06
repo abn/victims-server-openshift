@@ -10,7 +10,7 @@ This repo allows you to deploy a new instance of the victims-web server on opens
 3. You have *rhc* installed and ready
 
 ### Creating the app
-This is pretty straight forward, run the following command. The app should be deployed to http://victims-NAMESPACE.rhcloud.com
+This is pretty straight forward, run the following command. The app should be deployed to ```http://victims-NAMESPACE.rhcloud.com```. See bottom for a sample output.
 ```sh
 rhc app create victims mongodb-2.2 python-2.6 --from-code git://github.com/abn/victims-server-openshift.git
 ```
@@ -21,8 +21,16 @@ rhc app create victims mongodb-2.2 python-2.6 --from-code git://github.com/abn/v
 4. Run the following command replacing ```$INPUTFILE``` with your file name.
 
 ```sh
-mongoimport -d victims -c hashes --type json --file $OPENSHIFT_REPO_DIR/$INPUTFILE  -h $OPENSHIFT_MONGODB_DB_HOST  -u admin -p $OPENSHIFT_MONGODB_DB_PASSWORD --port $OPENSHIFT_MONGODB_DB_PORT
+mongoimport -d $OPENSHIFT_APP_NAME -c hashes --type json --file $OPENSHIFT_DATA_DIR/$INPUTFILE  -h $OPENSHIFT_MONGODB_DB_HOST  -u admin -p $OPENSHIFT_MONGODB_DB_PASSWORD --port $OPENSHIFT_MONGODB_DB_PORT
 ```
+### Configuring the deploytment
+#### Application Configuration
+Any application configuration can be pushed by changing the ```configs/victimsweb.cfg``` file in the repo. This will be used instead of the ```application.cfg``` provided by victims-web.
+#### Build Hook Configuration
+We use ```configs/victimsweb.build.env``` file for doing a few build time tricks. This file is sourced before a the build hook executes.
+
+1. Branches/Tags: You can specify this as ```VICTIMS_GIT_BRANCH=master```. By default the master branch is checked out and used.
+2. Clean checkout: You can request this by setting ```VICTIMS_GIT_CLEAN=0``` to ```1```.
 
 ### Sample creation output
 ```sh
