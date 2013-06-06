@@ -2,19 +2,24 @@
 
 function fixcfg()
 {
-	cfg=$OPENSHIFT_DATA_DIR/victims-web/src/victims_web/application.cfg
-	sed -i s/'^DEBUG = True$'/'DEBUG = False'/g "$cfg"
-	sed -i s/'MONGODB_PORT = os.environ.*'/"MONGODB_PORT = int(os.environ['OPENSHIFT_DB_PORT'])"/ "$cfg"
+	# handle nonconfigurable application config
+	if [ -z "$(grep 'VICTIMS_CONFIG' $OPENSHIFT_DATA_DIR/victims-web/src/victims_web/application.py)"  ]; then
+		cp $OPENSHIFT_REPO_DIR/config/victimsweb.cfg $OPENSHIFT_REPO_DIR/libs/victims_web/application.cfg
+	fi
 }
 
+source $OPENSHIFT_REPO_DIR/config/victimsweb.build.env
 if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
+	if [ $VICTIMS_GIT_CLEAN -eq 1 ]; then
+		rm -rf $OPENSHIFT_DATA_DIR/victims-web
+	fi
 	if [ ! -d $OPENSHIFT_DATA_DIR/victims-web ]; then
 		git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
-		fixcfg
 	fi
+	(cd $OPENSHIFT_DATA_DIR/victims-web && git checkout $VICTIMS_GIT_BRANCH)
 	(cd $OPENSHIFT_DATA_DIR/victims-web && git pull --rebase)
-	ln -sf $OPENSHIFT_DATA_DIR/victims-web/src/victims_web $OPENSHIFT_REPO_DIR/libs/.
-	ln -sf $OPENSHIFT_DATA_DIR/victims-web/src/victims_web/blueprints/ui/static $OPENSHIFT_REPO_DIR/wsgi/.
+	cp -R $OPENSHIFT_DATA_DIR/victims-web/src/victims_web $OPENSHIFT_REPO_DIR/libs/.
+	cp -R $OPENSHIFT_DATA_DIR/victims-web/src/victims_web/blueprints/ui/static $OPENSHIFT_REPO_DIR/wsgi/.
 fi
 
 PYDIR=$(find $OPENSHIFT_HOMEDIR -maxdepth 1 -type d -name "python*" | sort | tail -n 1)

@@ -23,9 +23,9 @@ Source build and installation script.
 from setuptools import setup
 
 setup(
-    name='victims_web',
-    version='1.9.9',
-    description='The victi.ms language package to CVE service.',
+    name='victims_web_openshift',
+    version='2.0.0.BETA',
+    description='The openshift app for the victi.ms webservice',
     author='Steve Milner',
     url='http://www.victi.ms',
 

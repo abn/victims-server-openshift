@@ -2,14 +2,14 @@
 import os
 import sys
 
-PY_VERSION = '%d.%d'%(sys.version_info[0], sys.version_info[1])
-PY_DIR = 'python-%s'%(PY_VERSION)
+PY_VERSION = '%d.%d' % (sys.version_info[0], sys.version_info[1])
+PY_DIR = 'python-%s' % (PY_VERSION)
 
 # source: https://github.com/openshift/flask-example
 sys.path.insert(0, os.path.dirname(__file__) or '.')
 
 # add libs
-sys.path.append(os.path.join(os.getenv("OPENSHIFT_REPO_DIR"), "libs"))
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'libs'))
 
 if os.path.exists(os.path.join(os.environ['OPENSHIFT_HOMEDIR'], PY_DIR)):
     PY_DIR = os.path.join(os.environ['OPENSHIFT_HOMEDIR'], PY_DIR)
@@ -28,12 +28,11 @@ try:
 except IOError:
     pass
 
-# Workaround for inaccurate victims-web config
-os.environ['OPENSHIFT_DB_HOST'] = os.environ['OPENSHIFT_MONGODB_DB_HOST']
-os.environ['OPENSHIFT_DB_PORT'] = os.environ['OPENSHIFT_MONGODB_DB_PORT']
-os.environ['OPENSHIFT_DB_USERNAME'] = os.environ['OPENSHIFT_MONGODB_DB_USERNAME']
-os.environ['OPENSHIFT_DB_PASSWORD'] = os.environ['OPENSHIFT_MONGODB_DB_PASSWORD']
-
-
+# Instance configurations
+DB_NAME = os.environ['OPENSHIFT_APP_NAME']
+if len(DB_NAME.strip()) == 0:
+    DB_NAME = 'victimsweb'
+os.environ['VICTIMS_DB_NAME'] = DB_NAME
+os.environ['VICTIMS_CONFIG'] = os.path.join(
+    os.environ['OPENSHIFT_REPO_DIR'], 'config', 'victimsweb.cfg')
 from victims_web.application import app as application
-
