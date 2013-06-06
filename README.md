@@ -30,7 +30,8 @@ Any application configuration can be pushed by changing the ```configs/victimswe
 We use ```configs/victimsweb.build.env``` file for doing a few build time tricks. This file is sourced before a the build hook executes.
 
 1. Branches/Tags: You can specify this as ```VICTIMS_GIT_BRANCH=master```. By default the master branch is checked out and used.
-2. Clean checkout: You can request this by setting ```VICTIMS_GIT_CLEAN=0``` to ```1```.
+2. Specify your fork: This can be done by setting ```VICTIMS_GIT_URL``` to your repository url. This will delete any existing checkout.
+3. Clean checkout: You can request this by setting ```VICTIMS_GIT_CLEAN=0``` to ```1```.
 
 ### Sample creation output
 ```sh
