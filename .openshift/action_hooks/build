@@ -10,11 +10,15 @@ function fixcfg()
 
 source $OPENSHIFT_REPO_DIR/config/victimsweb.build.env
 if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
+	ORIGINAL=$(cd $OPENSHIFT_DATA_DIR/victims-web && git config remote.origin.url)
+	if [ "$ORIGINAL" != "$VICTIMS_GIT_URL" ]; then
+		VICTIMS_GIT_CLEAN=1
+	fi
 	if [ $VICTIMS_GIT_CLEAN -eq 1 ]; then
 		rm -rf $OPENSHIFT_DATA_DIR/victims-web
 	fi
 	if [ ! -d $OPENSHIFT_DATA_DIR/victims-web ]; then
-		git clone git://github.com/victims/victims-web.git $OPENSHIFT_DATA_DIR/victims-web
+		git clone $VICTIMS_GIT_URL $OPENSHIFT_DATA_DIR/victims-web
 	fi
 	(cd $OPENSHIFT_DATA_DIR/victims-web && git checkout $VICTIMS_GIT_BRANCH)
 	(cd $OPENSHIFT_DATA_DIR/victims-web && git pull --rebase)
