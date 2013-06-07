@@ -10,9 +10,11 @@ function fixcfg()
 
 source $OPENSHIFT_REPO_DIR/config/victimsweb.build.env
 if [ ! -d $OPENSHIFT_REPO_DIR/libs/victims_web ]; then
-	ORIGINAL=$(cd $OPENSHIFT_DATA_DIR/victims-web && git config remote.origin.url)
-	if [ "$ORIGINAL" != "$VICTIMS_GIT_URL" ]; then
-		VICTIMS_GIT_CLEAN=1
+	if [ -d $OPENSHIFT_DATA_DIR/victims-web ]; then
+		ORIGINAL=$(cd $OPENSHIFT_DATA_DIR/victims-web && git config remote.origin.url)
+		if [ "$ORIGINAL" != "$VICTIMS_GIT_URL" ]; then
+			VICTIMS_GIT_CLEAN=1
+		fi
 	fi
 	if [ $VICTIMS_GIT_CLEAN -eq 1 ]; then
 		rm -rf $OPENSHIFT_DATA_DIR/victims-web
