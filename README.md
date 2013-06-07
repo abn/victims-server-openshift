@@ -1,6 +1,8 @@
 victims-server-openshift
 ========================
 
+**NOTE**: This is superceded by https://github.com/victims/victims-server-openshift
+
 This repo allows you to deploy a new instance of the victims-web server on openshift.
 
 ## Running on OpenShift
