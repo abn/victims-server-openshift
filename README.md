@@ -10,9 +10,20 @@ This repo allows you to deploy a new instance of the victims-web server on opens
 3. You have *rhc* installed and ready
 
 ### Creating the app
+#### One Shot Deployment
 This is pretty straight forward, run the following command. The app should be deployed to ```http://victims-NAMESPACE.rhcloud.com```. See bottom for a sample output.
 ```sh
 rhc app create victims mongodb-2.2 python-2.6 --from-code git://github.com/abn/victims-server-openshift.git
+```
+#### Alternative Deployment
+This can be useful if the *One Shot* option fails or if you want to configure the instance from build 1.
+```sh
+rhc app create victims mongodb-2.2 python-2.6
+cd victims
+git remote add upstream -m master git://github.com/abn/victims-server-openshift.git
+git pull -s recursive -X theirs upstream master
+# Make any configuration changes here and commit them.
+git push origin master
 ```
 ### Importing data
 1. Get the app's SSH address by running ```rhc app show victims```
