@@ -29,6 +29,6 @@ setup(
     author='Steve Milner',
     url='http://www.victi.ms',
 
-    install_requires=[],
+    install_requires=['pymongo>=2.5.2'],
 )
 
